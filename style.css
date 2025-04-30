@@ -1,0 +1,30 @@
+body {
+    background-image: url('./imgs/fundo.png'); /* Caminho da imagem */
+    background-size: cover; /* Faz a imagem cobrir toda a tela */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita repetição */
+    background-attachment: fixed; /* Mantém a imagem fixa ao rolar a página */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Garante que o corpo ocupe toda a altura da viewport */
+}
+
+.box-body {
+    background-color: #40839f;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: inset 0em 5px #95b0c7;
+    align-items: center;
+}
+
+.h1-manutencao { 
+    margin-top: 10%;
+}
+
+.h1-lotushabbo { 
+    border: 1px solid black;
+    padding: 15px;
+    border-radius: 10px;
+    background-image: url('./imgs/nuvens.gif');
+    margin: 10px;
+}
