@@ -10,10 +10,14 @@ export async function middleware(req) {
   } = await supabase.auth.getSession();
 
   // Se o usuário não estiver autenticado e tentar acessar uma rota admin
-  if (!session && req.nextUrl.pathname.startsWith('/admin') && req.nextUrl.pathname !== '/admin/login') {
+  if (
+    !session &&
+    req.nextUrl.pathname.includes('/admin') &&
+    !req.nextUrl.pathname.includes('/login')
+  ) {
     return NextResponse.redirect(new URL('/admin/login', req.url));
   }
-
+  
   return res;
 }
 

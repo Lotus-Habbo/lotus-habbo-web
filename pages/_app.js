@@ -1,6 +1,8 @@
 import '../styles/globals.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import Player from '../components/Player/Player';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -11,7 +13,12 @@ function MyApp({ Component, pageProps }) {
     }
   }, [router]);
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Component {...pageProps} />
+      <Player />
+    </>
+  );
 }
 
 export default MyApp; 
