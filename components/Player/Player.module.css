@@ -1,0 +1,126 @@
+.playerContainer {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    font-family: sans-serif;
+  }
+  
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .controlButton {
+    background-color: #5c67f2;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .controlButton:hover {
+    background-color: #4a54c4;
+  }
+  
+  .volumeControlWrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .volumeSliderContainer {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    background: none;
+    padding: 0;
+  }
+  
+  .volumeSlider {
+    writing-mode: lr-tb;
+    appearance: none;
+    height: 8px;
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    margin-left: 25px;
+    width: 75px;
+  }
+  
+  .volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #5c67f2;
+  }
+  
+  .volumeSlider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #5c67f2;
+  }
+  
+  .select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background-color: #5c67f2;
+    color: white;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0L11.1962 7.5H0.803848L6 0Z' fill='white'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+  }
+  
+  .select:hover {
+    background-color: #4a54c4;
+  }
+  
+  .reloadButton {
+    position: absolute;
+    bottom: 45px;
+    left: 60px;
+    transform: translateX(-50%);
+    background-color: #5c67f2;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.7em;
+    transition: background-color 0.3s ease;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .reloadButton:hover {
+    background-color: #4a54c4;
+  }
