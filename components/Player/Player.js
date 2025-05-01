@@ -8,9 +8,9 @@ export default function Player() {
   const [selectedStation, setSelectedStation] = useState("https://sv13.hdradios.net:7770/stream");
 
   const stations = [
-    { label: "HabboNight", value: "https://sv13.hdradios.net:7770/stream" },
+    //{ label: "HabboNight", value: "https://sv13.hdradios.net:7770/stream" },
     { label: "Habblindados", value: "https://stream1.svrdedicado.org/8058/stream" },
-    { label: "LightHabbo", value: "https://stream.truesecurity.com.br/8048/stream" },
+    //{ label: "LightHabbo", value: "https://stream.truesecurity.com.br/8048/stream" },
     { label: "Kihabbo", value: "https://s10.w3bserver.com/radio/8160/stream" },
   ];
 
