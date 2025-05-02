@@ -10,7 +10,7 @@ export default function Layout({ children, title = 'Fundo Lotus' }) {
         <title>{title}</title>
         <meta name="description" content="Fundo Lotus - Seu fundo de investimento confiável" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="../imgs/favicon.png" />
       </Head>
 
       <div className={styles.container}>
