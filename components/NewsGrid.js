@@ -52,7 +52,7 @@ export default function NewsGrid() {
         <Link href={`/news/${item.id}`} key={item.id} className={styles.newsCard}>
           <div className={styles.newsImageContainer}>
             <img 
-              src={getImageUrl(item.image)} 
+              src={getImageUrl(item.image_url)} 
               alt={item.title} 
               className={styles.newsImage}
             />
