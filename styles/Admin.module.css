@@ -10,7 +10,7 @@
 
 .adminTitle {
   font-size: 2rem;
-  color: #333;
+  color: #fff;
   margin-bottom: 1rem;
 }
 
@@ -195,3 +195,11 @@
     justify-content: flex-end;
   }
 } 
+
+.ql-topic {
+  background-color: #f0f0f0; /* Cor de fundo */
+  border-radius: 4px;
+  padding: 5px;
+  margin: 2px 0;
+  font-weight: bold;
+}
