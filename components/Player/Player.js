@@ -5,7 +5,7 @@ export default function Player() {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
-  const [selectedStation, setSelectedStation] = useState("https://sv13.hdradios.net:7770/stream");
+  const [selectedStation, setSelectedStation] = useState("https://stream1.svrdedicado.org/8058/stream");
 
   const stations = [
     //{ label: "HabboNight", value: "https://sv13.hdradios.net:7770/stream" },

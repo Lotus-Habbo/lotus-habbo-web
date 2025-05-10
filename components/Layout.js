@@ -3,12 +3,12 @@ import Navigation from './Navigation';
 import Header from './Header';
 import styles from '../styles/Layout.module.css';
 
-export default function Layout({ children, title = 'Fundo Lotus' }) {
+export default function Layout({ children, title = 'Lotus Habbo' }) {
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta name="description" content="Fundo Lotus - Seu fundo de investimento confiável" />
+        <meta name="description" content="Lotus Habbo" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="../imgs/favicon.png" />
       </Head>
