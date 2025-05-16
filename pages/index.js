@@ -4,6 +4,7 @@ import NewsGrid from '../components/NewsGrid';
 import Layout from '../components/Layout';
 import styles from '../styles/Home.module.css';
 import NewsHabboList from '../components/NewsHabboList/NewsHabboList';
+import PartnersCarousel from '../components/PartnersCarousel/PartnersCarousel';
 
 export default function Home() {
   return (
@@ -14,7 +15,10 @@ export default function Home() {
       </Head>
 
       <div className={styles.container}>
-        <FeaturedNews />
+        <div className={styles.topSection}>
+          <FeaturedNews />
+          <PartnersCarousel />
+        </div>
         <div className={styles.contentSplit}>
           <div className={styles.backgroundgrid}>
             <NewsGrid />

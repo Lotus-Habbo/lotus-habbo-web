@@ -4,6 +4,8 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import dynamic from 'next/dynamic';
 import styles from '../../styles/Admin.module.css';
 import 'react-quill/dist/quill.snow.css';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 // Importação dinâmica do React-Quill para evitar erros de SSR
 const ReactQuill = dynamic(() => import('react-quill'), {
@@ -18,6 +20,7 @@ const modules = {
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
     [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
     ['link', 'image'],
+    [{ 'color': [] }, { 'background': [] }],
     ['clean']
   ],
 };
@@ -26,8 +29,81 @@ const formats = [
   'header',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
-  'link', 'image'
+  'link', 'image',
+  'background', 'color'
 ];
+
+// Add custom styles for the editor
+const customStyles = `
+  .ql-editor .topic-highlight {
+    background-color: #0066cc;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin: 2px 0;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .ql-editor .topic-highlight:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+
+  /* Estilos para diferentes variações de tópicos */
+  .ql-editor .topic-highlight.primary {
+    background-color: #0066cc;
+    color: white;
+  }
+
+  .ql-editor .topic-highlight.secondary {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .ql-editor .topic-highlight.accent {
+    background-color: #FF9800;
+    color: white;
+  }
+
+  .ql-editor .topic-highlight.warning {
+    background-color: #f44336;
+    color: white;
+  }
+
+  /* Estilo para o seletor de cores do editor */
+  .ql-color-picker .ql-picker-label,
+  .ql-background .ql-picker-label {
+    padding: 3px 5px;
+  }
+
+  .ql-color-picker .ql-picker-options,
+  .ql-background .ql-picker-options {
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+// Carousel configuration
+const carouselResponsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 4,
+    slidesToSlide: 1
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    slidesToSlide: 1
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    slidesToSlide: 1
+  }
+};
 
 export default function AdminNews() {
   const [title, setTitle] = useState('');
@@ -38,12 +114,20 @@ export default function AdminNews() {
   const [error, setError] = useState(null);
   const [editingId, setEditingId] = useState(null);
   
+  // Partners state
+  const [partners, setPartners] = useState([]);
+  const [partnerImage, setPartnerImage] = useState('');
+  const [partnerLink, setPartnerLink] = useState('');
+  const [editingPartnerId, setEditingPartnerId] = useState(null);
+  const [showPartnerForm, setShowPartnerForm] = useState(false);
+  
   const router = useRouter();
   const supabase = createClientComponentClient();
 
   useEffect(() => {
     checkUser();
     fetchNews();
+    fetchPartners();
   }, []);
 
   async function checkUser() {
@@ -68,6 +152,21 @@ export default function AdminNews() {
       console.error('Error:', error);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchPartners() {
+    try {
+      const { data, error } = await supabase
+        .from('partners')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setPartners(data || []);
+    } catch (error) {
+      setError('Erro ao carregar parceiros');
+      console.error('Error:', error);
     }
   }
 
@@ -147,10 +246,184 @@ export default function AdminNews() {
     setImageUrl('');
   }
 
+  async function handlePartnerSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      if (editingPartnerId) {
+        const { error } = await supabase
+          .from('partners')
+          .update({ 
+            image_url: partnerImage,
+            link: partnerLink
+          })
+          .eq('id', editingPartnerId);
+
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from('partners')
+          .insert([{ 
+            image_url: partnerImage,
+            link: partnerLink
+          }]);
+
+        if (error) throw error;
+      }
+
+      setPartnerImage('');
+      setPartnerLink('');
+      setEditingPartnerId(null);
+      setShowPartnerForm(false);
+      await fetchPartners();
+    } catch (error) {
+      setError('Erro ao salvar parceiro');
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleDeletePartner(id) {
+    if (!window.confirm('Tem certeza que deseja excluir este parceiro?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('partners')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      await fetchPartners();
+    } catch (error) {
+      setError('Erro ao excluir parceiro');
+      console.error('Error:', error);
+    }
+  }
+
+  function handleEditPartner(partner) {
+    setEditingPartnerId(partner.id);
+    setPartnerImage(partner.image_url);
+    setPartnerLink(partner.link || '');
+    setShowPartnerForm(true);
+  }
+
+  function handleCancelPartner() {
+    setEditingPartnerId(null);
+    setPartnerImage('');
+    setPartnerLink('');
+    setShowPartnerForm(false);
+  }
+
   if (loading) return <div>Carregando...</div>;
 
   return (
     <div className={styles.adminContainer}>
+      <style jsx global>{customStyles}</style>
+      
+      {/* Partners Section */}
+      <div className={styles.partnersSection}>
+        <div className={styles.sectionHeader}>
+          <h2>Parceiros</h2>
+          <button 
+            onClick={() => setShowPartnerForm(!showPartnerForm)}
+            className={styles.addButton}
+          >
+            {showPartnerForm ? 'Cancelar' : 'Adicionar Parceiro'}
+          </button>
+        </div>
+
+        {showPartnerForm && (
+          <form onSubmit={handlePartnerSubmit} className={styles.partnerForm}>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>URL da Imagem:</label>
+              <input
+                type="url"
+                value={partnerImage}
+                onChange={(e) => setPartnerImage(e.target.value)}
+                required
+                className={styles.formInput}
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Link (opcional):</label>
+              <input
+                type="url"
+                value={partnerLink}
+                onChange={(e) => setPartnerLink(e.target.value)}
+                className={styles.formInput}
+              />
+            </div>
+
+            <div className={styles.buttonGroup}>
+              <button type="submit" className={styles.submitButton}>
+                {editingPartnerId ? 'Atualizar' : 'Adicionar'}
+              </button>
+              {editingPartnerId && (
+                <button
+                  type="button"
+                  onClick={handleCancelPartner}
+                  className={styles.cancelButton}
+                >
+                  Cancelar
+                </button>
+              )}
+            </div>
+          </form>
+        )}
+
+        {/* Partners Carousel */}
+        <div className={styles.partnersCarousel}>
+          <div className={styles.carouselWrapper}>
+            <Carousel
+              responsive={carouselResponsive}
+              infinite={true}
+              autoPlay={true}
+              autoPlaySpeed={3000}
+              keyBoardControl={true}
+              customTransition="all .5"
+              transitionDuration={500}
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+            >
+              {partners.map((partner) => (
+                <div key={partner.id} className={styles.partnerItem}>
+                  <a 
+                    href={partner.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={styles.partnerLink}
+                  >
+                    <img 
+                      src={partner.image_url} 
+                      alt="Partner" 
+                      className={styles.partnerImage}
+                    />
+                  </a>
+                  <div className={styles.partnerActions}>
+                    <button
+                      onClick={() => handleEditPartner(partner)}
+                      className={styles.editButton}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => handleDeletePartner(partner.id)}
+                      className={styles.deleteButton}
+                    >
+                      Excluir
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        </div>
+      </div>
+
+      {/* Existing News Section */}
       <div className={styles.adminHeader}>
         <h1 className={styles.adminTitle}>
           {editingId ? 'Editar Notícia' : 'Adicionar Nova Notícia'}

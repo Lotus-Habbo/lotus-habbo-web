@@ -203,3 +203,103 @@
   margin: 2px 0;
   font-weight: bold;
 }
+
+/* Partners Section Styles */
+.partnersSection {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.addButton {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addButton:hover {
+  background-color: #45a049;
+}
+
+.partnerForm {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.partnersCarousel {
+  margin: 1rem 0;
+  padding: 1rem 0;
+}
+
+.partnerItem {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.partnerLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.partnerImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.partnerImage:hover {
+  transform: scale(1.05);
+}
+
+.partnerActions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Carousel Customization */
+.carouselWrapper {
+  position: relative;
+}
+
+.carouselWrapper :global(.react-multi-carousel-list) {
+  padding: 1rem 0;
+}
+
+.carouselWrapper :global(.react-multi-carousel-dot-list) {
+  margin-top: 1rem;
+}
+
+.carouselWrapper :global(.react-multi-carousel-item) {
+  padding: 0 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .partnersSection {
+    padding: 0.5rem;
+  }
+
+  .partnerActions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
