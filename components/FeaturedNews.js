@@ -6,9 +6,9 @@ export default function FeaturedNews() {
     <div className={styles.featuredNews}>
       <div className={styles.featuredNewsOverlay}>
         <h2>Grande Evento Chegando!</h2>
-        <p>Prepare-se para o maior evento do ano no LotusHabbo! Não perca as surpresas que estamos preparando.</p>
-        <Link href="/noticia-destaque" className={styles.featuredNewsLink}>
-          Leia mais
+        <p>Prepare-se para o evento de competição de quartos Casa Alphaville LotusHabbo!.</p>
+        <Link href="https://discord.com/channels/@me/1366957073279094815/1373052442161446933" className={styles.featuredNewsLink}>
+          Inscreva-se aqui
         </Link>
       </div>
     </div>
