@@ -9,10 +9,10 @@ export default function Navigation() {
         <Image src="/imgs/LOTUS (1).png" alt="Ícone Home" width={30} height={30} />
         Home
       </Link>
-      {/* <Link href="/sobre" className={styles.navLink}>
+       <Link href="/about" className={styles.navLink}>
         <Image src="/imgs/438__-3jL.png" alt="Ícone Sobre" width={30} height={30} />
         Sobre Nós
-      </Link> */}
+      </Link>
     </nav>
   );
 } 
