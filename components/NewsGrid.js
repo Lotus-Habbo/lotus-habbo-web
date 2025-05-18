@@ -17,7 +17,7 @@ export default function NewsGrid() {
   const fetchNews = async () => {
     try {
       const { data, error } = await supabase
-        .from('news')
+        .from('news_preview')
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -60,7 +60,7 @@ export default function NewsGrid() {
           <div className={styles.newsContent}>
             <h3>{item.title}</h3>
             <p className={styles.preview}>
-              {stripHtml(item.description).substring(0, 100)}...
+              {stripHtml(item.description_preview).substring(0, 100)}...
             </p>
           </div>
         </Link>
