@@ -17,8 +17,8 @@ export default function About() {
         "Coordena e supervisiona todas as áreas do projeto, garantindo a execução das atividades com responsabilidade e liderança.",
     },
     {
-      name: "Heloise – CEO e Diretora de Cronograma e Eventos",
-      user: "Heloisee",
+      name: "Heloiseee – CEO e Diretora de Cronograma e Eventos",
+      user: "Heloiseee",
       description:
         "Responsável pela organização dos eventos, planejamento de cronogramas e liderança criativa em ações e competições.",
     },
