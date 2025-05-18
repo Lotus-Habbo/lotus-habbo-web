@@ -20,7 +20,7 @@ export default function About() {
       name: "Heloiseee – CEO e Diretora de Cronograma e Eventos",
       user: "Heloiseee",
       description:
-        "Responsável pela organização dos eventos, planejamento de cronogramas e liderança criativa em ações e competições.",
+        "Coordena e supervisiona todas as áreas do projeto, e é responsável pela organização dos eventos, planejamento de cronogramas e liderança criativa em ações e competições.",
     },
     {
       name: "HenriqueHK. – Diretor de Patrocínio e Divulgação",
