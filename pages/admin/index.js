@@ -140,7 +140,7 @@ export default function AdminNews() {
   async function fetchNews() {
     try {
       const { data, error } = await supabase
-        .from('news')
+        .from('news_preview')
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -177,6 +177,15 @@ export default function AdminNews() {
 
     try {
       if (editingId) {
+        // Buscar a notícia completa da tabela news
+        const { data: newsData, error: fetchError } = await supabase
+          .from('news')
+          .select('*')
+          .eq('id', editingId)
+          .single();
+
+        if (fetchError) throw fetchError;
+
         // Atualizar notícia existente
         const { error } = await supabase
           .from('news')
@@ -232,11 +241,28 @@ export default function AdminNews() {
     }
   }
 
-  function handleEdit(news) {
-    setEditingId(news.id);
-    setTitle(news.title);
-    setContent(news.description || '');
-    setImageUrl(news.image_url || '');
+  async function handleEdit(news) {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('news')
+        .select('*')
+        .eq('id', news.id)
+        .single();
+
+      if (error) throw error;
+
+      setEditingId(news.id);
+      setTitle(data.title);
+      setContent(data.description || '');
+      setImageUrl(data.image_url || '');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      setError('Erro ao carregar notícia para edição');
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function handleCancel() {
@@ -317,7 +343,7 @@ export default function AdminNews() {
     setShowPartnerForm(false);
   }
 
-  if (loading) return <div>Carregando...</div>;
+  if (loading) return <div className={styles.loading}>Carregando...</div>;
 
   return (
     <div className={styles.adminContainer}>
